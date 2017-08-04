@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "#############################################################################\n##\n## Name: KOTEY FELIX NEEQUAYE\n## Project: Website for Baseball Effectiveness Measurement\n## Date: October 29, 2014\n##\n#############################################################################\n\n\nif (\"pacman\" %in% rownames(installed.packages()) == FALSE)\n{\n  install.packages(\"pacman\")\n  library('pacman', character.only = T)\n}else{\n  library('pacman', character.only = T)\n}\n\np_load(shinydashboard, shiny, DT, RSQLite, ggvis, shinythemes)\n\n#############################################################################\n#############################################################################\n\n# path to sqlite database\n# database holding player information\ndatabase <- \"data/Bball.sqlite\"\n# table for player information\ntable <- \"BballaPlayerInfo\"\n\n# Define the fields we want to save from the form\nfields <- c(\"PlayerName\", \"Team\", \"BallFaced\",\n            \"Hits\", \"InningsPlayed\", \"PlayDate\")\n\n#############################################################################\n## function to save data to database\n#############################################################################\n\nsaveData <- function(bdata)\n{\n  # Connect to the database\n  db <- dbConnect(drv = RSQLite::SQLite(),dbname = file.path(database))\n  # Construct the update query by looping over the data fields\n  dbrow <- nrow(loadData()) + 1\n  query <- sprintf(\n    \"INSERT INTO %s (%s) VALUES ('%s')\",\n    table,\n    paste(c(\"PlayerID\", names(bdata)), collapse = \", \"),\n    paste(c(dbrow, bdata), collapse = \"', '\")\n  )\n  # Submit the update query and disconnect\n  dbGetQuery(db, query)\n  dbDisconnect(db)\n}\n\n#############################################################################\n## function to load data from database\n#############################################################################\n\nloadData <- function()\n{\n  # Connect to the database\n  db <- dbConnect(drv = RSQLite::SQLite(),dbname = file.path(database))\n  # Construct the fetching query\n  query <- sprintf(\"SELECT * FROM %s\", table)\n  # Submit the fetch query and disconnect\n  data <- dbGetQuery(db, query)\n  dbDisconnect(db)\n  data\n}",
+    "created" : 1499348253714.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "1963828612",
+    "id" : "641DA2E2",
+    "lastKnownWriteTime" : 1497400147,
+    "last_content_update" : 1497400147,
+    "path" : "F:/FKotey/Dropbox/Code_Library/R/ShinyApp/bball/helper.R",
+    "project_path" : "helper.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
