@@ -14,3 +14,8 @@ Screenshot of Application
 -------------------------
 
 ![](img/img01.png)
+
+To run the app on RStudio use the command below
+-----------------------------------------------
+
+`runGitHub("fkotey/R_Projects/", subdir = "bball/")`
